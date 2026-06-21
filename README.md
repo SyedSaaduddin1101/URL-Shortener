@@ -17,17 +17,6 @@
 
 ---
 
-## 📸 Screenshot
-
-
-<img src="url.png" alt="Shortify UI" width="800"/>
-
-*The clean, dark-themed web interface showing URL shortening in action.*
-
-
-
----
-
 ## 🚀 Overview
 
 **Shortify** is a **fault-tolerant, distributed URL shortening service** built with Go, Raft Consensus, and gRPC. It can run as a single node or scale to a 3-node cluster that survives server failures without losing data.
