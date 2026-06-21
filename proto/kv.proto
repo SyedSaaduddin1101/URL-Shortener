@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package kv;
+
+option go_package = "distributed-url-shortener/proto";
+
+service URLShortener {
+  rpc Shorten(ShortenRequest) returns (ShortenResponse);
+  rpc Resolve(ResolveRequest) returns (ResolveResponse);
+}
+
+message ShortenRequest { string long_url = 1; }
+message ShortenResponse { string short_code = 1; }
+
+message ResolveRequest { string short_code = 1; }
+message ResolveResponse { string long_url = 1; bool found = 2; }

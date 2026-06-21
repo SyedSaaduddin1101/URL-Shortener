@@ -1,0 +1,60 @@
+const htmlPage = `<!DOCTYPE html>
+<html>
+<head><title>URL Shortener</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#0f0e17;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh}
+.container{background:#1a1a2e;padding:40px;border-radius:16px;width:500px;max-width:90%}
+h1{color:#ff8906;margin-bottom:20px}
+input{width:70%;padding:12px;border-radius:8px;border:2px solid #2d2d44;background:#0f0e17;color:#fff;font-size:16px}
+input:focus{outline:none;border-color:#ff8906}
+button{padding:12px 24px;background:#ff8906;color:#0f0e17;border:none;border-radius:8px;font-weight:bold;font-size:16px;cursor:pointer}
+button:hover{background:#e67e00}
+.result{margin-top:20px;padding:16px;background:#0f0e17;border-radius:8px;border-left:4px solid #ff8906;display:none}
+.result.show{display:block}
+.result a{color:#ff8906;text-decoration:none}
+.error{color:#ff6b6b;margin-top:10px;display:none}
+.loader{color:#a7a9be;margin-top:10px;display:none}
+</style>
+</head>
+<body>
+<div class=container>
+<h1>URL Shortener</h1>
+<div>
+<input type=url id=url placeholder="https://example.com" value="https://google.com">
+<button onclick="shorten()">Shorten</button>
+</div>
+<div class=loader id=loader>Loading...</div>
+<div class=result id=result></div>
+<div class=error id=error></div>
+</div>
+<script>
+async function shorten(){
+	var url=document.getElementById('url').value.trim();
+	var r=document.getElementById('result');
+	var e=document.getElementById('error');
+	var l=document.getElementById('loader');
+	if(!url){e.textContent='Please enter a URL';e.style.display='block';return}
+	r.classList.remove('show');e.style.display='none';l.style.display='block';
+	try{
+		var res=await fetch('/shorten',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:url})});
+		var data=await res.json();
+		if(data.short_code){
+			var shortUrl = window.location.origin + '/' + data.short_code;
+			// This now shows just the code (e.g., "le.com") but links to the full URL
+			r.innerHTML='<strong>Short URL:</strong><br><a href="'+shortUrl+'" target="_blank">'+data.short_code+'</a><br><br>Click to test!';
+			r.classList.add('show');
+		}else{
+			e.textContent='Error: '+(data.error||'Something went wrong');
+			e.style.display='block';
+		}
+	}catch(err){
+		e.textContent='Network error. Is the server running?';
+		e.style.display='block';
+	}
+	l.style.display='none';
+}
+document.getElementById('url').addEventListener('keypress',function(e){if(e.key==='Enter')shorten()});
+</script>
+</body>
+</html>`

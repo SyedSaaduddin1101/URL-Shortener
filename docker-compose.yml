@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  node1:
+    build: .
+    environment:
+      - NODE_ID=node1
+      - RAFT_PORT=8000
+      - GRPC_PORT=50051
+    ports:
+      - "50051:50051"
+    volumes:
+      - node1_data:/data
+    networks:
+      - dbnet
+
+  node2:
+    build: .
+    environment:
+      - NODE_ID=node2
+      - RAFT_PORT=8000
+      - GRPC_PORT=50051
+    ports:
+      - "50052:50051"
+    volumes:
+      - node2_data:/data
+    networks:
+      - dbnet
+
+  node3:
+    build: .
+    environment:
+      - NODE_ID=node3
+      - RAFT_PORT=8000
+      - GRPC_PORT=50051
+    ports:
+      - "50053:50051"
+    volumes:
+      - node3_data:/data
+    networks:
+      - dbnet
+
+volumes:
+  node1_data:
+  node2_data:
+  node3_data:
+
+networks:
+  dbnet:
