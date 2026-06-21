@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: url-shortener
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ID
+        value: node1
+      - key: RAFT_PORT
+        value: 8000
+      - key: GRPC_PORT
+        value: 50051
+      - key: PORT
+        value: 8080
