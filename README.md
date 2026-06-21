@@ -19,9 +19,12 @@
 
 ## 📸 Screenshot
 
-![Shortify UI](url.png)
+
+![Shortify UI](https://raw.githubusercontent.com/SyedSaaduddin1101/URL-Shortener/main/url.png)
 
 *The clean, dark-themed web interface showing URL shortening in action.*
+
+
 
 ---
 
